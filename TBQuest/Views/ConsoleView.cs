@@ -242,7 +242,7 @@ namespace TBQuest
             ConsoleWindowControl.DisableResize();
             ConsoleWindowControl.DisableMaximize();
             ConsoleWindowControl.DisableMinimize();
-            Console.Title = "The Aion Project";
+            Console.Title = "TBQuest";
 
             //
             // set the default console window values
@@ -467,56 +467,56 @@ namespace TBQuest
             //
             // intro
             //
-            DisplayGamePlayScreen("Mission Initialization", Text.InitializeMissionIntro(), ActionMenu.MissionIntro, "");
+            DisplayGamePlayScreen("Adventurer Contract", Text.InitializeMissionIntro(), ActionMenu.MissionIntro, "");
             GetContinueKey();
 
             //
             // get Player's name
             //
-            DisplayGamePlayScreen("Mission Initialization - Name", Text.InitializeMissionGetPlayerName(), ActionMenu.MissionIntro, "");
+            DisplayGamePlayScreen("Adventurer Contract - Name", Text.InitializeMissionGetPlayerName(), ActionMenu.MissionIntro, "");
             DisplayInputBoxPrompt("Enter your name: ");
             Player.Name = "Joe";
-            //Player.Name = GetString();
+            Player.Name = GetString();
 
             //
             // get Player's age
             //
-            DisplayGamePlayScreen("Mission Initialization - Age", Text.InitializeMissionGetPlayerAge(Player.Name), ActionMenu.MissionIntro, "");
+            DisplayGamePlayScreen("Adventurer Contract - Age", Text.InitializeMissionGetPlayerAge(Player.Name), ActionMenu.MissionIntro, "");
             int gamePlayerAge;
 
-            //GetInteger($"Enter your age {Player.Name}: ", 0, 1000000, out gamePlayerAge);
-            Player.Age = 1;
-            //Player.Age = gamePlayerAge;
+            GetInteger($"Enter your age {Player.Name}: ", 0, 1000000, out gamePlayerAge);
+           
+            Player.Age = gamePlayerAge;
 
 
             //
             // get Player's race
             //
-            DisplayGamePlayScreen("Mission Initialization - Race", Text.InitializeMissionGetPlayerRace(Player), ActionMenu.MissionIntro, "");
+            DisplayGamePlayScreen("Adventurer Contract - Race", Text.InitializeMissionGetPlayerRace(Player), ActionMenu.MissionIntro, "");
             DisplayInputBoxPrompt($"Enter your race {Player.Name}: ");
             Player.Race = Character.RaceType.Human;
-            //Player.Race = GetRace();
+            Player.Race = GetRace();
 
             //
             //get Player's home planet
             //
-            DisplayGamePlayScreen("Mission Initializtion - Home Planet", Text.InitializeMissionGetPlayerHomePlanet(Player.Name), ActionMenu.MissionIntro, "");
-            DisplayInputBoxPrompt("Enter your home planet: ");
+            DisplayGamePlayScreen("Adventurer Contract - Home Town", Text.InitializeMissionGetPlayerHomePlanet(Player.Name), ActionMenu.MissionIntro, "");
+            DisplayInputBoxPrompt("Enter your home Town: ");
             Player.HomeTown = "1";
-            //Player.HomeTown = GetString();
+            Player.HomeTown = GetString();
 
             //
             //get Player's reason to why they came here
             //
-            DisplayGamePlayScreen("Mission Initializtion - Reasoning?", Text.InitializeMissionGetPlayerReasoning(Player.Name), ActionMenu.MissionIntro, "");
+            DisplayGamePlayScreen("Adventurer Contract - Reasoning?", Text.InitializeMissionGetPlayerReasoning(Player.Name), ActionMenu.MissionIntro, "");
             DisplayInputBoxPrompt("Enter your home planet: ");
             Player.PlayerRecruited = true;
-            //Player.PlayerRecruited = GetBool();
+            Player.PlayerRecruited = GetBool();
 
             //
             // echo the Player's info
             //
-            DisplayGamePlayScreen("Mission Initialization - Complete", Text.InitializeMissionEchoPlayerInfo(Player), ActionMenu.MissionIntro, "");
+            DisplayGamePlayScreen("Adventurer Contract - Complete", Text.InitializeMissionEchoPlayerInfo(Player), ActionMenu.MissionIntro, "");
             GetContinueKey();
 
             // 
@@ -561,7 +561,7 @@ namespace TBQuest
             int spaceTimeLocationId = 0;
             bool validSpaceTimeLocationId = false;
 
-            DisplayGamePlayScreen("Travel to a New Space-Time Location", Text.Travel(_gamePlayer, _gameUniverse.SpaceTimeLocations), ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen("Travel to a  Location", Text.Travel(_gamePlayer, _gameUniverse.SpaceTimeLocations), ActionMenu.MainMenu, "");
 
             while (!validSpaceTimeLocationId)
             {
@@ -583,7 +583,7 @@ namespace TBQuest
                 }
                 else
                 {
-                    DisplayInputErrorMessage("It appears you entered an invalid Space-Time location id. Please try again.");
+                    DisplayInputErrorMessage("It appears you entered an invalid location id. Please try again.");
                 }
             }
 
@@ -600,7 +600,7 @@ namespace TBQuest
                 visitedSpaceTimeLocations.Add(_gameUniverse.GetSpaceTimeLocationById(spaceTimeLocationId));
             }
 
-            DisplayGamePlayScreen("Space-Time Locations Visited", Text.VisitedLocations(visitedSpaceTimeLocations), ActionMenu.PlayerMenu, "");
+            DisplayGamePlayScreen("Locations Visited", Text.VisitedLocations(visitedSpaceTimeLocations), ActionMenu.PlayerMenu, "");
         }
 
 
@@ -843,6 +843,8 @@ namespace TBQuest
 
             DisplayGamePlayScreen("Speak to Character", message, ActionMenu.NpcMenu, "");
         }
+
+
         #endregion
     }
 }

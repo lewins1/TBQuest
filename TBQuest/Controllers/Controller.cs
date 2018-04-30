@@ -16,6 +16,7 @@ namespace TBQuest
         private ConsoleView _gameConsoleView;
         private Player _gamePlayer;
         private bool _playingGame;
+        private bool _battle;
         private Universe _gameUniverse;
         private SpaceTimeLocation _currentLocation;
         #endregion
@@ -85,8 +86,8 @@ namespace TBQuest
                         break;
                     case PlayerObjectType.Key:
 
-                        SpaceTimeLocation test = _gameUniverse.GetSpaceTimeLocationById(3);
-                        test.Accessible = true;
+                        //SpaceTimeLocation test = _gameUniverse.GetSpaceTimeLocationById(3);
+                        //test.Accessible = true;
                         break;
                     default:
                         break;
@@ -300,7 +301,9 @@ namespace TBQuest
             _gamePlayer.HomeTown = player.HomeTown;
             _gamePlayer.SpaceTimeLocationID = 1;
             _gamePlayer.PlayerRecruited = player.PlayerRecruited;
-
+            _gamePlayer.Defense = 10;
+            _gamePlayer.AttackPower = 5;
+            _gamePlayer.BattleCooldown = 0;
             _gamePlayer.Experience = 0;
             _gamePlayer.Health = 100;
 
@@ -312,6 +315,58 @@ namespace TBQuest
                 _gamePlayer.SpaceTimeLocationsVisited.Add(_currentLocation.SpaceTimeLocationID);
 
                 _gamePlayer.Experience += _currentLocation.Experience;
+            }
+            if (_gamePlayer.SpaceTimeLocationID == 3)
+            {
+                ActionMenu.currentMenu = ActionMenu.CurrentMenu.BattleMenu;
+                _battle = true;
+                Battle(3);
+            }
+            else
+            {
+                if (_currentLocation.FightChance == true)
+                {
+                    Random random = new Random();
+                    int monster= 1;
+                    if (random.Next(1, 100) > 50)
+                    {
+                        monster = 1;
+                    }
+                    else
+                    {
+                        monster = 2;
+                    }
+                     
+                    int chance = random.Next(1, 3);
+                    if (_gamePlayer.BattleCooldown == 0)
+                    {
+                        if (chance == 2)
+                        {
+                            _gamePlayer.BattleCooldown = 10;
+                            ActionMenu.currentMenu = ActionMenu.CurrentMenu.BattleMenu;
+                            _battle = true;
+                            Battle(monster);
+                        }
+                    }
+                    else
+                    {
+                        _gamePlayer.BattleCooldown -= 1;
+                    }
+                }
+            }
+            if (_gamePlayer.SpaceTimeLocationID == 1)
+            {
+                _gamePlayer.Health = 100;
+            }
+            if (_gamePlayer.Experience > 300)
+            {
+                SpaceTimeLocation test = _gameUniverse.GetSpaceTimeLocationById(3);
+                test.Accessible = true;
+            }
+            if (_gamePlayer.Experience > 10000)
+            {
+                ActionMenu.currentMenu = ActionMenu.CurrentMenu.GameOverMenu;
+                _gameConsoleView.DisplayGamePlayScreen("You beat the game, Congrats", "You really did it", ActionMenu.GameOverMenu, "");
             }
         }
         private PlayerAction GetNextPlayerAction()
@@ -338,6 +393,14 @@ namespace TBQuest
 
                 case ActionMenu.CurrentMenu.AdminMenu:
                     PlayerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.AdminMenu);
+                    break;
+
+                case ActionMenu.CurrentMenu.BattleMenu:
+                    PlayerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.BattleMenu);
+                    break;
+
+                case ActionMenu.CurrentMenu.GameOverMenu:
+                    PlayerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.GameOverMenu);
                     break;
 
                 default:
@@ -385,6 +448,185 @@ namespace TBQuest
             messageBoxText += npcRows;
 
             return messageBoxText;
+        }
+        private void Battle(int battleid)
+        {
+            Monster battleMonster = new Monster();
+            battleMonster = _gameUniverse.GetMonsterById(battleid);
+            
+            _gameConsoleView.DisplayGamePlayScreen("Battle screen", Text.BattleStart(battleMonster), ActionMenu.BattleMenu, "");
+
+            Random random = new Random();
+            int chance;
+            bool missed = false;
+            bool monMissed = false;
+            bool fled = false;
+            int tempPlayerDef = 0;
+            int tempMonDef = 0;
+            
+            int attack = 1;
+            int monAttack = 1;
+            int round = 1;
+            int monHealth = battleMonster.Health;
+            PlayerAction playerActionChoice = PlayerAction.None;
+            ActionMenu.currentMenu = ActionMenu.CurrentMenu.BattleMenu;
+            
+            while (_battle)
+            {
+                if (monHealth <= 0)
+                {
+                    _battle = false;
+                    _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_currentLocation), ActionMenu.MainMenu, "");
+                    break;
+                }
+                if (_gamePlayer.Health < 0)
+                {
+                    _battle = false;
+                    _gameConsoleView.DisplayGamePlayScreen("Game Over", "Try harder next time, maybe?", ActionMenu.GameOverMenu, "");
+                    playerActionChoice = GetNextPlayerAction();
+                    Environment.Exit(1);
+                    break;
+                }
+
+                switch (battleMonster.MonAttackMethod)
+                {
+                    case Monster.AttackMethod.Defensive:
+                        if (round == 1)
+                        {
+                            round += 1;
+                        }
+                        else
+                        {
+                            round -= 1;
+                            tempMonDef = 10;
+                        }
+                        break;
+                    case Monster.AttackMethod.Offensive:
+                        break;
+                    case Monster.AttackMethod.Special:
+                        break;
+                    case Monster.AttackMethod.Boss:
+                        break;
+                    default:
+                        break;
+                }
+
+                playerActionChoice = GetNextPlayerAction();
+                switch (playerActionChoice)
+                {
+                    case PlayerAction.Attack:
+                        chance = random.Next(1, 20);
+                        chance += _gamePlayer.AttackPower;
+
+                        if (monsterAttack(random, battleMonster, _gamePlayer.Defense))
+                        {
+                            monAttack = monsterDamage(random, battleMonster);
+                            _gamePlayer.Health -= monAttack;
+                            monMissed = false;
+                        }
+                        else
+                        {
+                            monMissed = true;
+                        }
+
+                        if (chance > battleMonster.Defense + tempMonDef)
+                        {
+                            attack = random.Next(1, 6);
+                            attack += _gamePlayer.AttackPower;
+                            monHealth -= attack;
+                            tempMonDef = 0;
+                            tempPlayerDef = 0;
+                            missed = false;
+                        }
+                        else
+                        {
+                            tempMonDef = 0;
+                            tempPlayerDef = 0;
+                            missed = true;
+                        }
+                        _gameConsoleView.DisplayGamePlayScreen("Battle screen", Text.BattleAttack(battleMonster, _gamePlayer, round, missed, monMissed, attack, monAttack, monHealth), ActionMenu.BattleMenu, "");
+                        break;
+                    case PlayerAction.Defend:
+                        tempPlayerDef = random.Next(2, 8);
+                        if (monsterAttack(random, battleMonster, _gamePlayer.Defense + tempPlayerDef))
+                        {
+                            monAttack = monAttack = monsterDamage(random, battleMonster);
+                            _gamePlayer.Health -= monAttack;
+                            monMissed = false;
+                        }
+                        else
+                        {
+                            monMissed = true;
+                        }
+                        _gameConsoleView.DisplayGamePlayScreen("Battle screen", Text.BattleDefend(battleMonster, _gamePlayer,round, monMissed, monAttack, monHealth), ActionMenu.BattleMenu, "");
+                        break;
+                    case PlayerAction.UseItem:
+                        break;
+                    case PlayerAction.Flee:
+                        chance = random.Next(1, 100);
+                        if (chance >= 75)
+                        {
+                            _battle = false;
+                            fled = true;
+                            _gameConsoleView.DisplayGamePlayScreen("Escaped battle", Text.CurrentLocationInfo(_currentLocation), ActionMenu.MainMenu, "");
+
+                        }
+                        else
+                        {
+                            _gameConsoleView.DisplayGamePlayScreen("Battle screen", Text.BattleFlee(battleMonster, _gamePlayer, round, monMissed, monAttack, monHealth), ActionMenu.BattleMenu, "");
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                
+            }
+            if (!fled)
+            {
+                _gamePlayer.Experience += battleMonster.ExpValue;
+            }
+            ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
+
+
+
+        }
+        private bool monsterAttack(Random random, Monster battleMonster, int defense)
+        {
+            int chance;
+            chance = random.Next(1, 20) + battleMonster.AttackPower;
+            if (chance > defense)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private int monsterDamage(Random random, Monster battleMonster)
+        {
+            int damage = 0;
+            switch (battleMonster.MonAttackMethod)
+            {
+                case Monster.AttackMethod.Defensive:
+                    damage = random.Next(1, 4) + battleMonster.AttackPower;
+                    break;
+                case Monster.AttackMethod.Offensive:
+                    damage = random.Next(1, 8) + battleMonster.AttackPower;
+                    break;
+                case Monster.AttackMethod.Special:
+                    damage = random.Next(1, 1) + battleMonster.AttackPower;
+                    break;
+                case Monster.AttackMethod.Boss:
+                    damage = random.Next(1, 10) + battleMonster.AttackPower;
+                    break;
+                default:
+                    break;
+            }
+
+
+            return damage;
         }
         #endregion
     }

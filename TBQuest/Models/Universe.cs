@@ -12,6 +12,10 @@ namespace TBQuest
         private List<SpaceTimeLocation> _spaceTimeLocations;
         private List<GameObject> _gameObjects;
         private List<Npc> _npcs;
+        private List<Monster> _monsters;
+
+
+
 
         public List<SpaceTimeLocation> SpaceTimeLocations
         {
@@ -28,6 +32,11 @@ namespace TBQuest
             get { return _npcs; }
             set { _npcs = value; }
         }
+        public List<Monster> Monsters
+        {
+            get { return _monsters; }
+            set { _monsters = value; }
+        }
         #endregion
 
         #region Constructor
@@ -43,6 +52,7 @@ namespace TBQuest
             _spaceTimeLocations = UniverseObjects.SpaceTimeLocations;
             _gameObjects = UniverseObjects.GameObjects;
             _npcs = UniverseObjects.Npcs;
+            _monsters = BattleMonsters.Monsters;
         }
 
         #region Methods
@@ -327,6 +337,18 @@ namespace TBQuest
             return npcs;
         }
 
+        public Monster GetMonsterById(int Id)
+        {
+            Monster battlemonster = new Monster();
+            foreach (Monster monster in _monsters)
+            {
+                if(monster.Id == Id)
+                {
+                    battlemonster = monster;
+                }
+            }
+            return battlemonster;
+        }
         #endregion
 
     }

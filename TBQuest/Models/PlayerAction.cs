@@ -30,6 +30,10 @@ namespace TBQuest
         ObjectMenu,
         NonplayerCharacterMenu,
         PlayerMenu,
+        Attack,
+        Defend,
+        UseItem,
+        Flee,
         Exit
     }
 }

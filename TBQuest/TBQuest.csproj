@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\ActionMenu.cs" />
+    <Compile Include="Assets\BattleMonsters.cs" />
     <Compile Include="Assets\Text.cs" />
     <Compile Include="Assets\UniverseGameObjects.cs" />
     <Compile Include="Assets\UniverseLocations.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="Models\GameObject.cs" />
     <Compile Include="Models\ISpeak.cs" />
     <Compile Include="Models\Menu.cs" />
+    <Compile Include="Models\Monster.cs" />
     <Compile Include="Models\Npc.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\PlayerAction.cs" />

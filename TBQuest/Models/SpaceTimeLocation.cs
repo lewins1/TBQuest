@@ -18,6 +18,7 @@ namespace TBQuest
         private string _generalContents;
         private bool _accessable;
         private int _experience;
+        private bool _fightChance;
 
         #endregion
 
@@ -71,6 +72,13 @@ namespace TBQuest
             get { return _experience; }
             set { _experience = value; }
         }
+
+        public bool FightChance
+        {
+            get { return _fightChance; }
+            set { _fightChance = value; }
+        }
+
 
         #endregion
 

@@ -16,7 +16,9 @@ namespace TBQuest
             ObjectMenu,
             NpcMenu,
             PlayerMenu,
-            AdminMenu
+            BattleMenu,
+            AdminMenu,
+            GameOverMenu
         }
 
         public static CurrentMenu currentMenu = CurrentMenu.MainMenu;
@@ -104,6 +106,28 @@ namespace TBQuest
                 {
                     { '1', PlayerAction.TalkTo},
                     { '0', PlayerAction.ReturnToMainMenu }
+                }
+        };
+        public static Menu BattleMenu = new Menu()
+        {
+            MenuName = "BattleMenu",
+            MenuTitle = "Battle Menu",
+            MenuChoices = new Dictionary<char, PlayerAction>()
+                {
+                    { '1', PlayerAction.Attack},
+                    { '2', PlayerAction.Defend },
+                    { '3', PlayerAction.UseItem },
+                    { '4', PlayerAction.Flee }
+                }
+        };
+
+        public static Menu GameOverMenu = new Menu()
+        {
+            MenuName = "GameOverMenu",
+            MenuTitle = "GameOver Menu",
+            MenuChoices = new Dictionary<char, PlayerAction>()
+                {
+                    { '1', PlayerAction.Exit},
                 }
         };
     }

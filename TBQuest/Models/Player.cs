@@ -34,6 +34,33 @@ namespace TBQuest
 
         private int _health;
 
+        private int _defense;
+
+        private int _attackPower;
+
+        private int _battleCooldown;
+
+        public int BattleCooldown
+        {
+            get { return _battleCooldown; }
+            set { _battleCooldown = value; }
+        }
+
+
+        public int AttackPower
+        {
+            get { return _attackPower; }
+            set { _attackPower = value; }
+        }
+
+
+        public int Defense
+        {
+            get { return _defense; }
+            set { _defense = value; }
+        }
+
+
         private List<int> _spaceTimeLocationsVisited;
         #endregion
 

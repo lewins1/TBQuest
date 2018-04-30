@@ -16,18 +16,18 @@ namespace TBQuest
         public static string MissionIntro()
         {
             string messageBoxText =
-            "You have been hired by the Norlon to participate " +
-            "in its latest endeavor, the Aion Project. Your mission is to " +
-            "test the limits of the new Aion Engine and report back to " +
-            "the Norlon Corporation.\n" +
+            "You have been hired by the Silver Swords " +
+            "to investigate a small town that has been under " +
+            "the attack of a few dark entities. Your mission is to " +
+            "find out what is causing these attacks and vanquish it.\n" +
             " \n" +
             "Press the Esc key to exit the game at any point.\n" +
             " \n" +
-            "Your mission begins now.\n" +
+            "Your adventure begins now.\n" +
             " \n" +
-            "\tYour first task will be to set up the initial parameters of your mission.\n" +
+            "\tYour first task will be to fill out the usual paper work required for these jobs.\n" +
             " \n" +
-            "\tPress any key to begin the Mission Initialization Process.\n";
+            "\tPress any key to begin the Paperwork procedure.\n";
 
             return messageBoxText;
         }
@@ -47,9 +47,9 @@ namespace TBQuest
         public static string InitializeMissionIntro()
         {
             string messageBoxText =
-                "Before you begin your mission we much gather your base data.\n" +
+                "Before you begin your adventure we need a basic amount of information.\n" +
                 " \n" +
-                "You will be prompted for the required information. Please enter the information below.\n" +
+                "You will be prompted for the required information. Please write the information below.\n" +
                 " \n" +
                 "\tPress any key to begin.";
 
@@ -59,9 +59,9 @@ namespace TBQuest
         public static string InitializeMissionGetPlayerName()
         {
             string messageBoxText =
-                "Enter your name Player.\n" +
+                "Enter your name adventurer.\n" +
                 " \n" +
-                "Please use the name you wish to be referred during your mission.";
+                "Please use the name you wish to be referred during your travels.";
 
             return messageBoxText;
         }
@@ -69,11 +69,11 @@ namespace TBQuest
         public static string InitializeMissionGetPlayerAge(string name)
         {
             string messageBoxText =
-                $"Very good then, we will call you {name} on this mission.\n" +
+                $"Ah, right I remember you, {name}, skilled adventurer.\n" +
                 " \n" +
                 "Enter your age below.\n" +
                 " \n" +
-                "Please use the standard Earth year as your reference.";
+                "Have to make sure you aren't under the required age to adventure.";
 
             return messageBoxText;
         }
@@ -81,21 +81,18 @@ namespace TBQuest
         public static string InitializeMissionGetPlayerRace(Player gamePlayer)
         {
             string messageBoxText =
-                $"{gamePlayer.Name}, it will be important for us to know your race on this mission.\n" +
+                $"{gamePlayer.Name}, it will be important for us to know your race on this adventure.\n" +
                 " \n" +
-                "Enter your race below.\n" +
+                "Write your race below.\n" +
                 " \n" +
-                "Please use the universal race classifications below." +
+                "Please use the terms us common folk can understand." +
                 " \n";
 
             string raceList = null;
 
             foreach (Character.RaceType race in Enum.GetValues(typeof(Character.RaceType)))
             {
-                if (race != Character.RaceType.Human)
-                {
-                    raceList += $"\t{race}\n";
-                }
+                raceList += $"\t{race}\n";
             }
 
             messageBoxText += raceList;
@@ -108,15 +105,15 @@ namespace TBQuest
             string messageBoxText =
                 $"Very good then {gamePlayer.Name}.\n" +
                 " \n" +
-                "It appears we have all the necessary data to begin your mission. You will find it" +
-                " listed below.\n" +
+                "It appears we have all the necessary information. You will find it" +
+                " written below.\n" +
                 " \n" +
-                $"\tPlayer Name: {gamePlayer.Name}\n" +
-                $"\tPlayer Age: {gamePlayer.Age}\n" +
-                $"\tPlayer Race: {gamePlayer.Race}\n" +
-                $"\tPlayer Home Planet: {gamePlayer.HomeTown}\n" +
+                $"\tContractee Name: {gamePlayer.Name}\n" +
+                $"\tAge: {gamePlayer.Age}\n" +
+                $"\tRace: {gamePlayer.Race}\n" +
+                $"\tHome Town: {gamePlayer.HomeTown}\n" +
                 " \n" +
-                "Press any key to begin your mission.";
+                "Press any key to begin your adventure.";
 
             return messageBoxText;
         }
@@ -128,11 +125,11 @@ namespace TBQuest
         public static string InitializeMissionGetPlayerHomePlanet(string name)
         {
             string messageBoxText =
-                $"{name}, in case of emergency, it may be necessary to return your remains home.\n" +
+                $"{name}, in case of your untimely demise, it may be necessary to return your remains to your hometown.\n" +
                 "\n" +
-                "Enter your home planet below. \n" +
+                "Enter your home town below. \n" +
                 " \n" +
-                "please use the standard Galactic desingation as your reference.";
+                "please write in common, I don't have a lick of elvish or orcish.";
             return messageBoxText;
         }
 
@@ -154,12 +151,12 @@ namespace TBQuest
         public static string InitialLocationInfo()
         {
             string messageBoxText =
-            "You are now in the Norlon Corporation research facility located in " +
-            "the city of Heraklion on the north coast of Crete. You have passed through " +
-            "heavy security and descended an unknown number of levels to the top secret " +
-            "research lab for the Aion Project.\n" +
+            "You are now in the town of Phandalin " +
+            "despite the recent murders and missing persons reports, the town seems " +
+            "as busy as any port town would be. Most buildings and shops seem open and " +
+            "ready for business, all besides the blacksmith's shop.\n" +
             " \n" +
-            "\tChoose from the menu options to proceed.\n";
+            "\tChoose what you wish to do next.\n";
 
             return messageBoxText;
         }
@@ -214,9 +211,9 @@ namespace TBQuest
         public static string Travel(Player gamePlayer, List<SpaceTimeLocation> spaceTimeLocations)
         {
             string messageBoxText =
-                $"{gamePlayer.Name}, Aion Base will need to know the name of the new location.\n" +
+                $"{gamePlayer.Name}, where are you heading off to?\n" +
                 " \n" +
-                "Enter the ID number of your desired location from the table below.\n" +
+                "Enter the ID number of the location from the table below.\n" +
                 " \n" +
 
 
@@ -244,7 +241,7 @@ namespace TBQuest
         public static string VisitedLocations(IEnumerable<SpaceTimeLocation> spaceTimeLocations)
         {
             string messageBoxText =
-                "Space-Time Locations Visited\n" +
+                "Locations Visited\n" +
                 " \n" +
 
                 //
@@ -345,7 +342,7 @@ namespace TBQuest
 
 
             string messageBoxText =
-                "Space-Time Location Objects\n" +
+                "Location Objects\n" +
                 " \n" +
 
                 "ID".PadRight(10) + "Name".PadRight(30) + "Type".PadRight(20) + "\n" +
@@ -421,7 +418,7 @@ namespace TBQuest
         public static string ListAllSpaceTimeLocations(IEnumerable<SpaceTimeLocation> spaceTimeLocations)
         {
             string messageBoxText =
-                "Space-Time Locations\n" +
+                "Locations\n" +
                 " \n" +
 
 
@@ -450,7 +447,7 @@ namespace TBQuest
                 " \n" +
                 "ID".PadRight(10) +
                 "Name".PadRight(30) +
-                "Space-Time Location Id".PadRight(10) + "\n" +
+                "Location Id".PadRight(10) + "\n" +
                 "---".PadRight(10) +
                 "----------------------".PadRight(30) +
                 "----------------------".PadRight(10) + "\n";
@@ -493,6 +490,136 @@ namespace TBQuest
 
             return messageBoxText;
         }
+        public static string BattleAttack(Monster battleMonster, Player player, int round, bool missed, bool monMissed, int attack, int monAttack, int monHealth)
+        {
+            string messageBoxText =
+                "You are currently in a battle with " + battleMonster.Name + "\n" +
+                "You currently have " + player.Health + " HP" + "\n" +
+                "The Monster currently has " + monHealth + "HP" + "\n";
+            if (missed)
+            {
+                messageBoxText += "You attempt to strike the monster, but fail" +  "\n"; ;
+            }
+            else
+            {
+                messageBoxText += "You successfully strike the monster for " + attack + " points of damage" + "\n"; ;
+            }
+            if (battleMonster.MonAttackMethod == Monster.AttackMethod.Defensive)
+            {
+                if (round == 1)
+                {
+                    if (monMissed)
+                    {
+                        messageBoxText += "The monster attempts to strike you, but fails" + "\n"; 
+                    }
+                    else
+                    {
+                        messageBoxText += "The monster successfully strikes you for " + monAttack + " points of damage" + "\n"; ;
+                    }
+                }
+                else
+                {
+                    messageBoxText += "The monster defends itself" + "\n"; 
+                }
+            }
+            else
+            {
+                if (monMissed)
+                {
+                    messageBoxText += "The monster attempts to strike you, but fails" + "\n"; ;
+                }
+                else
+                {
+                    messageBoxText += "The monster successfully strikes you for " + monAttack + " points of damage" + "\n"; ;
+                }
+            }
+            
 
+
+            return messageBoxText;
+        }
+        public static string BattleDefend(Monster battleMonster, Player player, int round, bool monMissed, int monAttack, int monHealth)
+        {
+            string messageBoxText =
+                "You are currently in a battle with " + battleMonster.Name + "\n" +
+                "You currently have " + player.Health + " HP" + "\n" +
+                "The Monster currently has " + monHealth + "HP" + "\n" +
+                 "You take a defensive stance, preparing yourself for the " + battleMonster.Name + "'s attack" + "\n";
+            if (battleMonster.MonAttackMethod == Monster.AttackMethod.Defensive)
+            {
+                if (round == 1)
+                {
+                    if (monMissed)
+                    {
+                        messageBoxText += "You successfully block the " + battleMonster.Name + "'s attack.";
+                    }
+                    else
+                    {
+                        messageBoxText += "The " + battleMonster.Name + " breaks through your defenses, dealing " + monAttack + " points of damage";
+                    }
+                }
+                else
+                {
+                    messageBoxText += "The monster defends itself" + "\n";
+                }
+            }
+            else
+            {
+                if (monMissed)
+                {
+                    messageBoxText += "You successfully block the " + battleMonster.Name + "'s attack.";
+                }
+                else
+                {
+                    messageBoxText += "The " + battleMonster.Name + " breaks through your defenses, dealing " + monAttack + " points of damage";
+                }
+            }
+            return messageBoxText;
+        }
+        public static string BattleFlee(Monster battleMonster, Player player, int round, bool monMissed, int monAttack, int monHealth)
+        {
+            string messageBoxText =
+                "You are currently in a battle with " + battleMonster.Name + "\n" +
+                "You currently have " + player.Health + " HP" + "\n" +
+                "The Monster currently has " + monHealth + "HP" + "\n" +
+                 "You Attempt to flee from the " + battleMonster.Name + ", but you fail." + "\n";
+            if (battleMonster.MonAttackMethod == Monster.AttackMethod.Defensive)
+            {
+                if (round == 1)
+                {
+                    if (monMissed)
+                    {
+                        messageBoxText += "The monster attempts to strike you, but fails" + "\n";
+                    }
+                    else
+                    {
+                        messageBoxText += "The monster successfully strikes you for " + monAttack + " points of damage" + "\n"; ;
+                    }
+                }
+                else
+                {
+                    messageBoxText += "The monster defends itself" + "\n";
+                }
+            }
+            else
+            {
+                if (monMissed)
+                {
+                    messageBoxText += "The monster attempts to strike you, but fails" + "\n"; ;
+                }
+                else
+                {
+                    messageBoxText += "The monster successfully strikes you for " + monAttack + " points of damage" + "\n"; ;
+                }
+            }
+            return messageBoxText;
+        }
+
+        public static string BattleStart(Monster battleMonster)
+        {
+            string messageBoxText =
+                "You start battle with a " + battleMonster.Name;
+            return messageBoxText;
+        }
     }
 }

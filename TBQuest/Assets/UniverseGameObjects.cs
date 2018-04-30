@@ -14,7 +14,7 @@ namespace TBQuest
             {
                 Id = 1,
                 Name = "Bag of Gold",
-                SpaceTimeLocationId = 2,
+                SpaceTimeLocationId = 6,
                 Description = "A small leather pouch filled with 9 gold coins.",
                 Type = PlayerObjectType.Treasure,
                 Value = 45,
@@ -27,7 +27,7 @@ namespace TBQuest
             {
                 Id = 2,
                 Name = "Ruby",
-                SpaceTimeLocationId = 3,
+                SpaceTimeLocationId = 6,
                 Description = "A bright red jewel",
                 Type = PlayerObjectType.Treasure,
                 Value = 45,
